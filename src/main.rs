@@ -1,17 +1,10 @@
 use clap::{Parser, ArgEnum};
 use uuid as ud; // renaming because so the cargo subcommand can be uuid
 
-#[derive(Parser)] 
-#[clap(name = "cargo")]
-#[clap(bin_name = "cargo")]
-enum Cargo {
-    Uuid(Uuid),
-}
-
 /// Simple program to generate uuid's
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
-struct Uuid {
+struct GenerateUuid {
     // expected output formatted
     #[clap(short, long, arg_enum, default_value = "string")]
     output: Output,
@@ -26,7 +19,7 @@ enum Output {
 }
 
 fn main() {
-    let Cargo::Uuid(args) = Cargo::parse();
+    let args = GenerateUuid::parse();
 
     let id = ud::Uuid::new_v4();
     match args.output {
